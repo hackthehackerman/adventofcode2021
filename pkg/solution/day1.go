@@ -1,21 +1,14 @@
-package main
+package solution
 
 import (
-	"fmt"
 	"strconv"
 )
 
-func dayOne(p string) {
-	switch p {
-	case "1":
-		d1p1()
-	case "2":
-		d1p2()
-	}
+type Solution struct {
 }
 
-func d1p1() {
-	lines := toLines("f1_1")
+func (s *Solution) Day1Part1(fn string) (ret int) {
+	lines := toLines(fn)
 	prev := 0
 	cnt := 0
 	for i, s := range lines {
@@ -25,16 +18,16 @@ func d1p1() {
 		}
 		prev = n
 	}
-	fmt.Println(cnt)
+	return cnt
 }
 
-func d1p2() {
-	nums := toInts(toLines("f1_1"))
+func (s *Solution) Day1Part2(fn string) (ret int) {
+	nums := toInts(toLines(fn))
 	cnt := 0
 	for i, n := range nums {
 		if i > 2 && n > nums[i-3] {
 			cnt += 1
 		}
 	}
-	fmt.Println(cnt)
+	return cnt
 }
