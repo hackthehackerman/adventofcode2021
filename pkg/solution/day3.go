@@ -6,7 +6,7 @@ import (
 )
 
 func (s *Solution) Day3Part1(fn string) (ret int64) {
-	lines := toLines("f3_1")
+	lines := toLines(fn)
 	var bits [12]int
 	for _, s := range lines {
 		for i, c := range s {
