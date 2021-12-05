@@ -25,3 +25,10 @@ func toInts(l []string) (r []int) {
 	}
 	return r
 }
+
+func sort(a int, b int) (int, int) {
+	if a < b {
+		return a, b
+	}
+	return b, a
+}
