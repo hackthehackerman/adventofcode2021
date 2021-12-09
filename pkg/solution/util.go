@@ -32,3 +32,29 @@ func sort(a int, b int) (int, int) {
 	}
 	return b, a
 }
+
+func max(ints []int) int {
+	if len(ints) <= 0 {
+		return 0
+	}
+	m := ints[0]
+	for _, v := range ints {
+		if v > m {
+			m = v
+		}
+	}
+	return m
+}
+
+func min(ints []int) int {
+	if len(ints) <= 0 {
+		return 0
+	}
+	m := ints[0]
+	for _, v := range ints {
+		if v < m {
+			m = v
+		}
+	}
+	return m
+}
