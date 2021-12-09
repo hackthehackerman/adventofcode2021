@@ -1,41 +1,8 @@
 package solution
 
 import (
-	"fmt"
 	"strings"
 )
-
-func (s *Solution) Day6Part1(fn string) (ret int) {
-	lines := toLines(fn)
-	nums := strings.Split(lines[0], ",")
-	numsInts := toInts(nums)
-
-	// simulate 1 fish with initial number 6
-	fish := []int{6}
-	cnt := make(map[int]int)
-	for i := 0; i < 86; i++ {
-		numNewFish := 0
-		for j, f := range fish {
-			if f == 0 {
-				numNewFish++
-				fish[j] = 6
-			} else {
-				fish[j] = f - 1
-			}
-		}
-		for j := 0; j < numNewFish; j++ {
-			fish = append(fish, 8)
-		}
-		cnt[i] = len(fish)
-	}
-
-	totalCnt := 0
-	for _, n := range numsInts {
-		totalCnt = totalCnt + cnt[85-n]
-	}
-
-	return totalCnt
-}
 
 type Pair struct {
 	fish, day int
@@ -66,41 +33,11 @@ func allCached(fish []int, day int, cache map[Pair]int) bool {
 	return true
 }
 
-func calc(fish int, curDay int, maxDay int, cache map[Pair]int) int {
-	// time.Sleep(1 * time.Second)
-	// fmt.Println(fish, curDay, maxDay, cache)
-
-	if val, ok := cache[Pair{fish, maxDay - curDay}]; ok {
-		return val
-	}
-	if curDay == maxDay {
-		return 1
-	}
-
-	fishArr := []int{fish}
-	fishArr = simulateDay(fishArr)
-	// cache[Pair{fish, maxDay - curDay - 1}] = len(fishArr)
-	for i := fish; i <= 6; i++ {
-
-		cache[Pair{i, maxDay - curDay - 1 + (i - fish)}] = len(fishArr)
-	}
-
-	cnt := 0
-	for _, f := range fishArr {
-		cnt += calc(f, curDay+1, maxDay, cache)
-	}
-	return cnt
-}
-
-func (s *Solution) Day6Part2(fn string) (ret int) {
-	lines := toLines(fn)
-	nums := strings.Split(lines[0], ",")
-	numsInts := toInts(nums)
-
-	maxDay := 256
+func (s *Solution) calc(start []int, maxDay int) (ret int) {
 	maxFish := 8
 	cache := make(map[Pair]int)
 
+	// pre compute number of fish with initial fish num and number of days
 	fish := []int{maxFish}
 	for i := 0; i < (maxDay/2)+maxFish+1; i++ {
 		numFish := len(fish)
@@ -113,7 +50,7 @@ func (s *Solution) Day6Part2(fn string) (ret int) {
 		fish = simulateDay(fish)
 	}
 
-	fish = numsInts
+	fish = start
 	cnt := 0
 	for i := 0; i < maxDay/2+1; i++ {
 		dayRemained := maxDay - i
@@ -126,8 +63,21 @@ func (s *Solution) Day6Part2(fn string) (ret int) {
 			fish = simulateDay(fish)
 		}
 	}
-
-	fmt.Println(cache)
-
 	return 0
+}
+
+func (s *Solution) Day6Part1(fn string) (ret int) {
+	lines := toLines(fn)
+	nums := strings.Split(lines[0], ",")
+	numsInts := toInts(nums)
+
+	return s.calc(numsInts, 80)
+}
+
+func (s *Solution) Day6Part2(fn string) (ret int) {
+	lines := toLines(fn)
+	nums := strings.Split(lines[0], ",")
+	numsInts := toInts(nums)
+
+	return s.calc(numsInts, 256)
 }
