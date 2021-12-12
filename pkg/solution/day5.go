@@ -33,7 +33,7 @@ func (s *Solution) Day5Part1(fn string) (ret int) {
 		c1, c2 := parseCoordinates(s)
 
 		if c1.x == c2.x {
-			y1, y2 := sort(c1.y, c2.y)
+			y1, y2 := sortInts(c1.y, c2.y)
 			for i := y1; i <= y2; i++ {
 				coordCnt := m[Coordinate{c1.x, i}]
 				if coordCnt == 1 {
@@ -44,7 +44,7 @@ func (s *Solution) Day5Part1(fn string) (ret int) {
 		}
 
 		if c1.y == c2.y {
-			x1, x2 := sort(c1.x, c2.x)
+			x1, x2 := sortInts(c1.x, c2.x)
 			for i := x1; i <= x2; i++ {
 				coordCnt := m[Coordinate{i, c1.y}]
 				if coordCnt == 1 {

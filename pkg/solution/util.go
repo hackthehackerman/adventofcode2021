@@ -3,7 +3,9 @@ package solution
 import (
 	"bufio"
 	"os"
+	"sort"
 	"strconv"
+	"strings"
 )
 
 func toLines(fn string) (r []string) {
@@ -26,7 +28,7 @@ func toInts(l []string) (r []int) {
 	return r
 }
 
-func sort(a int, b int) (int, int) {
+func sortInts(a int, b int) (int, int) {
 	if a < b {
 		return a, b
 	}
@@ -57,4 +59,38 @@ func min(ints []int) int {
 		}
 	}
 	return m
+}
+
+func sortString(s string) string {
+	split := strings.Split(s, "")
+	sort.Strings(split)
+	return strings.Join(split, "")
+}
+
+func Perm(a []string) [][]string {
+	var helper func([]string, int)
+	res := [][]string{}
+
+	helper = func(arr []string, n int) {
+		if n == 1 {
+			tmp := make([]string, len(arr))
+			copy(tmp, arr)
+			res = append(res, tmp)
+		} else {
+			for i := 0; i < n; i++ {
+				helper(arr, n-1)
+				if n%2 == 1 {
+					tmp := arr[i]
+					arr[i] = arr[n-1]
+					arr[n-1] = tmp
+				} else {
+					tmp := arr[0]
+					arr[0] = arr[n-1]
+					arr[n-1] = tmp
+				}
+			}
+		}
+	}
+	helper(a, len(a))
+	return res
 }
