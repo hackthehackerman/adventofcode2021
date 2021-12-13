@@ -33,10 +33,6 @@ func (s *Solution) Day9Part1(fn string) (ret int) {
 	return cnt
 }
 
-type Point struct {
-	x, y int
-}
-
 func floodFill(p Point, visited map[Point]bool, m [][]int, maxX int, maxY int) []Point {
 	ret := []Point{p}
 	visited[p] = true

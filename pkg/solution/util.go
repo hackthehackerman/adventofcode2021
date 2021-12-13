@@ -8,6 +8,10 @@ import (
 	"strings"
 )
 
+type Point struct {
+	x, y int
+}
+
 func toLines(fn string) (r []string) {
 	file, _ := os.Open(fn)
 	defer file.Close()
@@ -15,6 +19,21 @@ func toLines(fn string) (r []string) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		r = append(r, scanner.Text())
+	}
+
+	return
+}
+
+func toMatrix(fn string) (r [][]int) {
+	file, _ := os.Open(fn)
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		s := scanner.Text()
+		split := strings.Split(s, "")
+		ints := toInts(split)
+		r = append(r, ints)
 	}
 
 	return
